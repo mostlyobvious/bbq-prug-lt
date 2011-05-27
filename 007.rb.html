@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>007.rb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script>
+function navigate(e) {
+    var keynum = (window.event) // IE
+        ? e.keyCode
+        : e.which;
+    if (keynum == 8) {
+        window.location = "006.rb" + ".html";
+        return false;
+    }
+    if (keynum == 13 || keynum == 32) {
+        window.location = "008.rb" + ".html";
+        return false;
+    }
+    if (keynum == 73 || keynum == 105) {
+        window.location = "index.html";
+        return false;
+    }
+    return true;
+}
+</script>
+</head>
+<body onkeypress="return navigate(event)">
+<pre>  # then add this role
+  
+  class TestUser &lt; Bbq::TestUser
+    def be_welcomed
+      visit &quot;/&quot;
+      assert see?(&quot;hello world&quot;)
+    end
+  
+    def some_helper
+      # access to options inside object
+      @options[:some_option]
+    end
+  
+    module GateKeeper
+      def some_method
+        # namespaced for rolw
+      end
+    end
+  end
+</pre>
+</body>
