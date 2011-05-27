@@ -1,0 +1,149 @@
+# This is a sample Vroom input file. It should help you get started.
+#
+# Edit this file with your content. Then run `vroom --vroom` to start
+# the show!
+#
+# See `perldoc Vroom` for complete details.
+#
+---- config
+# Basic config options.
+title: Vroom!
+indent: 5
+height: 18
+width: 69
+skip: 0
+
+# The following options are for Gvim usage.
+vim: gvim
+# gvimrc: |
+#   set fuopt=maxhorz,maxvert
+#   set guioptions=egmLtT
+#   set guifont=Bitstream_Vera_Sans_Mono:h18
+#   set guicursor=a:blinkon0-ver25-Cursor
+#   colorscheme default
+
+---- center
+BBQ
+
+grill your cucumber, spice your steak
+
+@pawelpacana
+---- center
+== BBQ
+
+objected oriented acceptance tests kickstarter
+---- center
+== BBQ
+
+HOT! HOT! HOT!
+
+---- center
+== BBQ
+
+http://github.com/drugpl/bbq
+
+---- 
+== Crash course
+
++# Gemfile
+gem 'bbq', :git => 'git://github.com/drugpl/bbq.git', tag => "v0.0.2"
+
++bundle install
++rails g bbq:install -t test_unit
+
++# test/test_helper.rb
+require 'bbq/unit'
+
++rails g bbq:test MyFeatureName
+
+----i2,ruby
+# test/acceptance/test_user.rba
+# 
+# How does TestUser look like
+require 'test_helper'
+
+class TestUser < Bbq::TestUser
+  # what it has already?
+  # - capybara methods run in exclusive session
+  # - see!/not_see! (with asserts inside)
+  # - see?/not_see?
+  
+  # what will it have?
+  # - devise methods: login, logout, regsiter
+end
+
+----i2,ruby
+# then add this role
+
+class TestUser < Bbq::TestUser
+  def be_welcomed
+    visit "/"
+    assert see?("hello world")
+  end
+
+  def some_helper
+    # access to options inside object
+    @options[:some_option]
+  end
+
+  module GateKeeper
+    def some_method
+      # namespaced for rolw
+    end
+  end
+end
+
+----i2,ruby
+# test/acceptance/support/my_feature_test.rb
+
+class MyCaseFeature < Bbq::TestCase
+  background do
+    # this adds callback to setup
+  end
+  background :some_helper # this also
+
+  scenario "this is my case" do
+    user = TestUser.new(self, 
+      :login          => "tester", 
+      :password       => "dupa.8", 
+      :another_option => "look_at_me"
+    )
+    
+    user.roles(:gate_keeper)
+    user.some_method
+
+    # capybara method here
+    user.visit "/"
+
+    # see with built-in assert
+    user.see! "hello", "world", "!"
+  end
+end
+
+----
+== Status
+
++- Rails only
++- only Test::Unit right now
++- Devise helper in works
++- RSpec support soon
++- growing test suite
++- we're still 0.0.1, expect stable soon!
+
+----
+== BBQ inspired
+
++ EventMachine acceptance tests
++   - see my last DRUG talk
++   - http://github.com/pawelpacana/eventmachine-bbq-example
+
+
+----
+== Q&A
+
++- anything you didn't ask yet?
+
++- see you on DRUG
++   - 20/06/11, pub WrocLove
++   - http://drug.org.pl
++   - #drug.pl on freenode
